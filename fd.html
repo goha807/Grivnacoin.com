@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grivnacoin</title>
+    <style>
+        body {
+            background: url('clipboard_image_9ce6b757dd2ae6a8.png') no-repeat center center/cover;
+            text-align: center;
+            font-family: Arial, sans-serif;
+            color: white;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+        }
+        .buttons, .chat-container {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .chat-container {
+            display: none;
+        }
+        button {
+            padding: 15px;
+            margin: 10px;
+            font-size: 40px;
+            cursor: pointer;
+            background: transparent;
+            border: 2px solid white;
+            color: white;
+            border-radius: 10px;
+        }
+        #chat {
+            width: 80%;
+            height: 200px;
+            border: 1px solid white;
+            overflow-y: auto;
+            margin: 10px auto;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.6);
+        }
+        .support-message {
+            display: none;
+            font-size: 24px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Grivnacoin</h1>
+    <div class="buttons">
+        <button onclick="window.location.href='https://t.me/ylitaybot'">ТГ бот</button>
+        <button onclick="window.location.href='https://t.me/+8Tw9sIPVyGViODFi'">Група</button>
+        <button onclick="showChat()">Чат</button>
+    </div>
+    
+    <div class="chat-container">
+        <h2 class="support-message">Форма заповнення повідомлення:Потрібно ваше ім'я та описати свою проблему та надіслати! </h2>
+        <div id="chat"></div>
+        <input type="text" id="message" placeholder="Введіть повідомлення">
+        <button onclick="sendMessage()">Надіслати</button>
+        <button onclick="showMessages()">Показати</button>
+    </div>
+    
+    <script>
+        let messages = JSON.parse(localStorage.getItem('chatMessages')) || [];
+        
+        function showChat() {
+            document.querySelector('.buttons').style.display = 'none';
+            document.querySelector('.chat-container').style.display = 'block';
+            document.querySelector('.support-message').style.display = 'block';
+            showMessages();
+        }
+        
+        function sendMessage() {
+            let message = document.getElementById('message').value;
+            if (message.trim() !== "") {
+                messages.push(message);
+                localStorage.setItem('chatMessages', JSON.stringify(messages));
+                document.getElementById('message').value = "";
+                showMessages();
+            }
+        }
+        
+        function showMessages() {
+            let chat = document.getElementById('chat');
+            chat.innerHTML = "";
+            messages.forEach(msg => {
+                let p = document.createElement('p');
+                p.textContent = msg;
+                chat.appendChild(p);
+            });
+        }
+    </script>
+</body>
+</html>
